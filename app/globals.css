@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================================
+   INFRAMIND DESIGN SYSTEM — Dual Theme (Teal/Cyan Dark + Light)
+   Primary accent : Teal 500 → Cyan 400
+   Success        : Emerald 500
+   Warning        : Amber 400
+   Danger         : Rose 500
+   ===================================================================== */
+
+/* ── Dark theme (default) ────────────────────────────────────────────── */
+@layer base {
+  :root,
+  .dark {
+    --bg:              12 16 28;        /* deepest navy */
+    --bg-2:            16 22 40;        /* card surface */
+    --bg-3:            20 28 50;        /* raised surface */
+
+    --border:          255 255 255;     /* used at opacity */
+    --border-op:       0.07;
+
+    --text-primary:    226 232 255;
+    --text-secondary:  148 163 200;
+    --text-muted:      80 96 130;
+
+    --accent:          20 184 166;      /* teal-500 */
+    --accent-2:        34 211 238;      /* cyan-400 */
+    --accent-glow:     rgba(20,184,166,0.18);
+
+    --success:         16 185 129;
+    --warning:         251 191 36;
+    --danger:          244 63 94;
+
+    --scrollbar-track: rgba(12,16,28,0.8);
+    --scrollbar-thumb: rgba(20,184,166,0.25);
+    --scrollbar-hover: rgba(20,184,166,0.5);
+
+    --glass-bg:        rgba(16,22,40,0.55);
+    --glass-bg-raised: rgba(20,28,50,0.65);
+    --glass-border:    rgba(255,255,255,0.07);
+    --glass-glow:      0 0 30px -6px rgba(20,184,166,0.15);
+  }
+
+  /* ── Light theme ──────────────────────────────────────────────────── */
+  .light {
+    --bg:              241 245 249;     /* slate-100 */
+    --bg-2:            255 255 255;
+    --bg-3:            248 250 252;
+
+    --border:          15 23 42;
+    --border-op:       0.08;
+
+    --text-primary:    15 23 42;
+    --text-secondary:  51 65 85;
+    --text-muted:      100 116 139;
+
+    --accent:          13 148 136;      /* teal-600 */
+    --accent-2:        8 145 178;       /* cyan-600 */
+    --accent-glow:     rgba(13,148,136,0.12);
+
+    --success:         5 150 105;
+    --warning:         217 119 6;
+    --danger:          225 29 72;
+
+    --scrollbar-track: rgba(241,245,249,0.9);
+    --scrollbar-thumb: rgba(13,148,136,0.3);
+    --scrollbar-hover: rgba(13,148,136,0.55);
+
+    --glass-bg:        rgba(255,255,255,0.7);
+    --glass-bg-raised: rgba(248,250,252,0.85);
+    --glass-border:    rgba(15,23,42,0.08);
+    --glass-glow:      0 0 20px -4px rgba(13,148,136,0.08);
+  }
+}
+
+/* ── Global Resets & Base ─────────────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--text-primary));
+    font-family: var(--font-sans, system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Ambient background gradient (dark only) */
+  .dark body {
+    background-image:
+      radial-gradient(ellipse at 0% 0%,  rgba(20,184,166,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 0%, rgba(34,211,238,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 100%,rgba(16,185,129,0.04) 0%, transparent 55%);
+    background-attachment: fixed;
+  }
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar            { width: 5px; height: 5px; }
+::-webkit-scrollbar-track      { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb      { background: var(--scrollbar-thumb); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--scrollbar-hover); }
+
+/* ── Glassmorphism Utilities ─────────────────────────────────────────── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-raised {
+  background: var(--glass-bg-raised);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-glow);
+}
+
+.glass-input {
+  background: rgba(var(--bg-3), 0.5);
+  border: 1px solid rgba(var(--border), var(--border-op));
+  color: rgb(var(--text-primary));
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.glass-input:focus {
+  border-color: rgba(var(--accent), 0.55);
+  box-shadow: 0 0 0 2px rgba(var(--accent), 0.12);
+  outline: none;
+}
+
+/* ── Accent / Brand ──────────────────────────────────────────────────── */
+.accent-text   { color: rgb(var(--accent)); }
+.accent-text-2 { color: rgb(var(--accent-2)); }
+.accent-bg     { background-color: rgba(var(--accent), 0.12); }
+.accent-border { border-color: rgba(var(--accent), 0.3); }
+
+/* ── Animation Keyframes ─────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.03); }
+}
+@keyframes fade-in-up {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes scan-line {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.animate-pulse-glow  { animation: pulse-glow  6s ease-in-out infinite; }
+.animate-fade-in-up  { animation: fade-in-up  0.35s ease-out forwards; }
+.animate-blink       { animation: blink 1.2s step-start infinite; }
+
+/* ── CRT Terminal Overlay ────────────────────────────────────────────── */
+.crt-overlay {
+  position: relative;
+  overflow: hidden;
+}
+.crt-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Monaco Editor Host ──────────────────────────────────────────────── */
+.monaco-host {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+}
+
+/* ── Status Pills ────────────────────────────────────────────────────── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 9999px;
+  border: 1px solid;
+}
+.pill-success { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); color: rgb(52,211,153); }
+.pill-warning { background: rgba(251,191,36,0.12);  border-color: rgba(251,191,36,0.3);  color: rgb(252,211,77); }
+.pill-danger  { background: rgba(244,63,94,0.12);   border-color: rgba(244,63,94,0.3);   color: rgb(251,113,133); }
+.pill-accent  { background: rgba(20,184,166,0.12);  border-color: rgba(20,184,166,0.3);  color: rgb(45,212,191); }
+
+/* Light overrides for pills */
+.light .pill-success { color: rgb(5,150,105); }
+.light .pill-warning { color: rgb(180,83,9); }
+.light .pill-danger  { color: rgb(190,18,60); }
+.light .pill-accent  { color: rgb(13,148,136); }
